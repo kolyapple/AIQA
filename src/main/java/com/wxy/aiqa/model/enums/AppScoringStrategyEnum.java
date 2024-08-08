@@ -1,27 +1,27 @@
 package com.wxy.aiqa.model.enums;
 
+import org.apache.commons.lang3.ObjectUtils;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-import org.apache.commons.lang3.ObjectUtils;
 
 /**
- * 用户角色枚举
+ * App评分策略枚举
  *
  * @author <a href="https://github.com/liwxy">程序员鱼皮</a>
  * @from <a href="https://wxy.icu">编程导航知识星球</a>
  */
-public enum  UserRoleEnum {
+public enum AppScoringStrategyEnum {
 
-    USER("用户", "user"),
-    ADMIN("管理员", "admin"),
-    BAN("被封号", "ban");
+    CUSTOM("自定义", 0),
+    AI("AI", 1);
 
     private final String text;
 
-    private final String value;
+    private final int value;
 
-    UserRoleEnum(String text, String value) {
+    AppScoringStrategyEnum(String text, int value) {
         this.text = text;
         this.value = value;
     }
@@ -31,7 +31,7 @@ public enum  UserRoleEnum {
      *
      * @return
      */
-    public static List<String> getValues() {
+    public static List<Integer> getValues() {
         return Arrays.stream(values()).map(item -> item.value).collect(Collectors.toList());
     }
 
@@ -41,19 +41,19 @@ public enum  UserRoleEnum {
      * @param value
      * @return
      */
-    public static UserRoleEnum getEnumByValue(String value) {
+    public static AppScoringStrategyEnum getEnumByValue(Integer value) {
         if (ObjectUtils.isEmpty(value)) {
             return null;
         }
-        for (UserRoleEnum anEnum : UserRoleEnum.values()) {
-            if (anEnum.value.equals(value)) {
+        for (AppScoringStrategyEnum anEnum : AppScoringStrategyEnum.values()) {
+            if (anEnum.value == value) {
                 return anEnum;
             }
         }
         return null;
     }
 
-    public String getValue() {
+    public int getValue() {
         return value;
     }
 
