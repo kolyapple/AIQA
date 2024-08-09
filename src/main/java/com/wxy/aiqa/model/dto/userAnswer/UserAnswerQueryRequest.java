@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * 查询用户答案请求
  *
- * @author <a href="https://github.com/liwxy">程序员鱼皮</a>
+ * @author <a href="https://github.com/yupi">程序员鱼皮</a>
  * @from <a href="https://www.code-nav.cn">编程导航学习圈</a>
  */
 @EqualsAndHashCode(callSuper = true)
@@ -74,6 +74,16 @@ public class UserAnswerQueryRequest extends PageRequest implements Serializable 
      * 用户 id
      */
     private Long userId;
+
+    /**
+     * 搜索词
+     */
+    private String searchText;
+
+    /**
+     * id
+     */
+    private Long notId;
 
     private static final long serialVersionUID = 1L;
 }

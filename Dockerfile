@@ -1,5 +1,5 @@
 # Docker 镜像构建
-# @author <a href="https://github.com/liwxy">程序员鱼皮</a>
+# @author <a href="https://github.com/yupi">程序员鱼皮</a>
 # @from <a href="https://wxy.icu">编程导航知识星球</a>
 FROM maven:3.8.1-jdk-8-slim as builder
 

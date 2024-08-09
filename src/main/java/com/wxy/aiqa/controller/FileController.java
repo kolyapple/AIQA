@@ -1,20 +1,16 @@
 package com.wxy.aiqa.controller;
 
 import cn.hutool.core.io.FileUtil;
-import com.wxy.aiqa.model.dto.file.UploadFileRequest;
-import com.wxy.aiqa.model.entity.User;
-import com.wxy.aiqa.model.enums.FileUploadBizEnum;
 import com.wxy.aiqa.common.BaseResponse;
 import com.wxy.aiqa.common.ErrorCode;
 import com.wxy.aiqa.common.ResultUtils;
 import com.wxy.aiqa.constant.FileConstant;
 import com.wxy.aiqa.exception.BusinessException;
 import com.wxy.aiqa.manager.CosManager;
+import com.wxy.aiqa.model.dto.file.UploadFileRequest;
+import com.wxy.aiqa.model.entity.User;
+import com.wxy.aiqa.model.enums.FileUploadBizEnum;
 import com.wxy.aiqa.service.UserService;
-import java.io.File;
-import java.util.Arrays;
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,10 +19,15 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.util.Arrays;
+
 /**
  * 文件接口
  *
- * @author <a href="https://github.com/liwxy">程序员鱼皮</a>
+ * @author <a href="https://github.com/yupi">程序员鱼皮</a>
  * @from <a href="https://wxy.icu">编程导航知识星球</a>
  */
 @RestController

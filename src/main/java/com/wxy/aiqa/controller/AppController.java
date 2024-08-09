@@ -2,10 +2,7 @@ package com.wxy.aiqa.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.wxy.aiqa.annotation.AuthCheck;
-import com.wxy.aiqa.common.BaseResponse;
-import com.wxy.aiqa.common.DeleteRequest;
-import com.wxy.aiqa.common.ErrorCode;
-import com.wxy.aiqa.common.ResultUtils;
+import com.wxy.aiqa.common.*;
 import com.wxy.aiqa.constant.UserConstant;
 import com.wxy.aiqa.exception.BusinessException;
 import com.wxy.aiqa.exception.ThrowUtils;
@@ -15,6 +12,7 @@ import com.wxy.aiqa.model.dto.app.AppQueryRequest;
 import com.wxy.aiqa.model.dto.app.AppUpdateRequest;
 import com.wxy.aiqa.model.entity.App;
 import com.wxy.aiqa.model.entity.User;
+import com.wxy.aiqa.model.enums.ReviewStatusEnum;
 import com.wxy.aiqa.model.vo.AppVO;
 import com.wxy.aiqa.service.AppService;
 import com.wxy.aiqa.service.UserService;
@@ -24,11 +22,12 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 
 /**
  * 应用接口
  *
- * @author <a href="https://github.com/liwxy">程序员鱼皮</a>
+ * @author <a href="https://github.com/yupi">程序员鱼皮</a>
  * @from <a href="https://www.code-nav.cn">编程导航学习圈</a>
  */
 @RestController
@@ -62,6 +61,7 @@ public class AppController {
         // 填充默认值
         User loginUser = userService.getLoginUser(request);
         app.setUserId(loginUser.getId());
+        app.setReviewStatus(ReviewStatusEnum.REVIEWING.getValue());
         // 写入数据库
         boolean result = appService.save(app);
         ThrowUtils.throwIf(!result, ErrorCode.OPERATION_ERROR);
@@ -171,6 +171,8 @@ public class AppController {
         long size = appQueryRequest.getPageSize();
         // 限制爬虫
         ThrowUtils.throwIf(size > 20, ErrorCode.PARAMS_ERROR);
+        //只能看到过审
+        appQueryRequest.setReviewStatus(ReviewStatusEnum.PASS.getValue());
         // 查询数据库
         Page<App> appPage = appService.page(new Page<>(current, size),
                 appService.getQueryWrapper(appQueryRequest));
@@ -229,6 +231,8 @@ public class AppController {
         if (!oldApp.getUserId().equals(loginUser.getId()) && !userService.isAdmin(loginUser)) {
             throw new BusinessException(ErrorCode.NO_AUTH_ERROR);
         }
+        //重置审核状态
+        app.setReviewStatus(ReviewStatusEnum.REVIEWING.getValue());
         // 操作数据库
         boolean result = appService.updateById(app);
         ThrowUtils.throwIf(!result, ErrorCode.OPERATION_ERROR);
@@ -236,4 +240,42 @@ public class AppController {
     }
 
     // endregion
+
+    /**
+     * 应用审核
+     * @param reviewRequest
+     * @param request
+     * @return
+     */
+    @PostMapping("/review")
+    @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
+    public BaseResponse<Boolean> doAppReview(@RequestBody ReviewRequest reviewRequest, HttpServletRequest request) {
+        ThrowUtils.throwIf(reviewRequest == null, ErrorCode.PARAMS_ERROR);
+        Long id = reviewRequest.getId();
+        Integer reviewStatus = reviewRequest.getReviewStatus();
+        // 校验
+        ReviewStatusEnum reviewStatusEnum = ReviewStatusEnum.getEnumByValue(reviewStatus);
+        if (id == null || reviewStatusEnum == null) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        // 判断是否存在
+        App oldApp = appService.getById(id);
+        ThrowUtils.throwIf(oldApp == null, ErrorCode.NOT_FOUND_ERROR);
+        // 已是该状态
+        if (oldApp.getReviewStatus().equals(reviewStatus)) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "请勿重复审核");
+        }
+        // 更新审核状态
+        User loginUser = userService.getLoginUser(request);
+        App app = new App();
+        app.setId(id);
+        app.setReviewStatus(reviewStatus);
+        app.setReviewMessage(reviewRequest.getReviewMessage());
+        app.setReviewerId(loginUser.getId());
+        app.setReviewTime(new Date());
+        boolean result = appService.updateById(app);
+        ThrowUtils.throwIf(!result, ErrorCode.OPERATION_ERROR);
+        return ResultUtils.success(true);
+    }
+
 }

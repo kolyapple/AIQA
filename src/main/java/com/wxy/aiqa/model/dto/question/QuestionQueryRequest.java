@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * 查询题目请求
  *
- * @author <a href="https://github.com/liwxy">程序员鱼皮</a>
+ * @author <a href="https://github.com/yupi">程序员鱼皮</a>
  * @from <a href="https://www.code-nav.cn">编程导航学习圈</a>
  */
 @EqualsAndHashCode(callSuper = true)
@@ -38,14 +38,14 @@ public class QuestionQueryRequest extends PageRequest implements Serializable {
     private Long appId;
 
     /**
+     * id
+     */
+    private Long notId;
+
+    /**
      * 创建用户 id
      */
     private Long userId;
-
-    /**
-     * 搜索词
-     */
-    private String searchText;
 
     private static final long serialVersionUID = 1L;
 }

@@ -2,10 +2,6 @@ package com.wxy.aiqa.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.wxy.aiqa.annotation.AuthCheck;
-import com.wxy.aiqa.model.entity.User;
-import com.wxy.aiqa.model.vo.LoginUserVO;
-import com.wxy.aiqa.model.vo.UserVO;
-import com.wxy.aiqa.service.impl.UserServiceImpl;
 import com.wxy.aiqa.common.BaseResponse;
 import com.wxy.aiqa.common.DeleteRequest;
 import com.wxy.aiqa.common.ErrorCode;
@@ -13,34 +9,26 @@ import com.wxy.aiqa.common.ResultUtils;
 import com.wxy.aiqa.constant.UserConstant;
 import com.wxy.aiqa.exception.BusinessException;
 import com.wxy.aiqa.exception.ThrowUtils;
-import com.wxy.aiqa.model.dto.user.UserAddRequest;
-import com.wxy.aiqa.model.dto.user.UserLoginRequest;
-import com.wxy.aiqa.model.dto.user.UserQueryRequest;
-import com.wxy.aiqa.model.dto.user.UserRegisterRequest;
-import com.wxy.aiqa.model.dto.user.UserUpdateMyRequest;
-import com.wxy.aiqa.model.dto.user.UserUpdateRequest;
+import com.wxy.aiqa.model.dto.user.*;
+import com.wxy.aiqa.model.entity.User;
+import com.wxy.aiqa.model.vo.LoginUserVO;
+import com.wxy.aiqa.model.vo.UserVO;
 import com.wxy.aiqa.service.UserService;
-
-import java.util.List;
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.wxy.aiqa.service.impl.UserServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.util.DigestUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * 用户接口
  *
- * @author <a href="https://github.com/liwxy">程序员鱼皮</a>
+ * @author <a href="https://github.com/yupi">程序员鱼皮</a>
  * @from <a href="https://wxy.icu">编程导航知识星球</a>
  */
 @RestController

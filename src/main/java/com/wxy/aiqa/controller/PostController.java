@@ -3,13 +3,6 @@ package com.wxy.aiqa.controller;
 import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.wxy.aiqa.annotation.AuthCheck;
-import com.wxy.aiqa.model.dto.post.PostAddRequest;
-import com.wxy.aiqa.model.dto.post.PostEditRequest;
-import com.wxy.aiqa.model.dto.post.PostQueryRequest;
-import com.wxy.aiqa.model.dto.post.PostUpdateRequest;
-import com.wxy.aiqa.model.entity.Post;
-import com.wxy.aiqa.model.entity.User;
-import com.wxy.aiqa.model.vo.PostVO;
 import com.wxy.aiqa.common.BaseResponse;
 import com.wxy.aiqa.common.DeleteRequest;
 import com.wxy.aiqa.common.ErrorCode;
@@ -17,23 +10,27 @@ import com.wxy.aiqa.common.ResultUtils;
 import com.wxy.aiqa.constant.UserConstant;
 import com.wxy.aiqa.exception.BusinessException;
 import com.wxy.aiqa.exception.ThrowUtils;
+import com.wxy.aiqa.model.dto.post.PostAddRequest;
+import com.wxy.aiqa.model.dto.post.PostEditRequest;
+import com.wxy.aiqa.model.dto.post.PostQueryRequest;
+import com.wxy.aiqa.model.dto.post.PostUpdateRequest;
+import com.wxy.aiqa.model.entity.Post;
+import com.wxy.aiqa.model.entity.User;
+import com.wxy.aiqa.model.vo.PostVO;
 import com.wxy.aiqa.service.PostService;
 import com.wxy.aiqa.service.UserService;
-import java.util.List;
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * 帖子接口
  *
- * @author <a href="https://github.com/liwxy">程序员鱼皮</a>
+ * @author <a href="https://github.com/yupi">程序员鱼皮</a>
  * @from <a href="https://wxy.icu">编程导航知识星球</a>
  */
 @RestController

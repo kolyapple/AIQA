@@ -1,25 +1,26 @@
 package com.wxy.aiqa.controller;
 
-import com.wxy.aiqa.model.dto.postthumb.PostThumbAddRequest;
-import com.wxy.aiqa.model.entity.User;
 import com.wxy.aiqa.common.BaseResponse;
 import com.wxy.aiqa.common.ErrorCode;
 import com.wxy.aiqa.common.ResultUtils;
 import com.wxy.aiqa.exception.BusinessException;
+import com.wxy.aiqa.model.dto.postthumb.PostThumbAddRequest;
+import com.wxy.aiqa.model.entity.User;
 import com.wxy.aiqa.service.PostThumbService;
 import com.wxy.aiqa.service.UserService;
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * 帖子点赞接口
  *
- * @author <a href="https://github.com/liwxy">程序员鱼皮</a>
+ * @author <a href="https://github.com/yupi">程序员鱼皮</a>
  * @from <a href="https://wxy.icu">编程导航知识星球</a>
  */
 @RestController

@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 /**
  * MyBatis Plus 配置
  *
- * @author https://github.com/liwxy
+ * @author https://github.com/yupi
  */
 @Configuration
 @MapperScan("com.wxy.aiqa.mapper")

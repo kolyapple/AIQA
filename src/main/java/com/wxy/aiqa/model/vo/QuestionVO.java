@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * 题目视图
  *
- * @author <a href="https://github.com/liwxy">程序员鱼皮</a>
+ * @author <a href="https://github.com/yupi">程序员鱼皮</a>
  * @from <a href="https://www.code-nav.cn">编程导航学习圈</a>
  */
 @Data
@@ -29,7 +29,7 @@ public class QuestionVO implements Serializable {
     /**
      * 题目内容（json格式）
      */
-    private QuestionContentDTO questionContent;
+    private List<QuestionContentDTO> questionContent;
 
     /**
      * 应用 id
@@ -68,7 +68,7 @@ public class QuestionVO implements Serializable {
         }
         Question question = new Question();
         BeanUtils.copyProperties(questionVO, question);
-        QuestionContentDTO QuestionContentDTO = questionVO.getQuestionContent();
+        List<QuestionContentDTO> QuestionContentDTO = questionVO.getQuestionContent();
         question.setQuestionContent(JSONUtil.toJsonStr(QuestionContentDTO));
         return question;
     }
@@ -85,7 +85,10 @@ public class QuestionVO implements Serializable {
         }
         QuestionVO questionVO = new QuestionVO();
         BeanUtils.copyProperties(question, questionVO);
-        questionVO.setQuestionContent(JSONUtil.toBean(question.getQuestionContent(), QuestionContentDTO.class));
+        String questionContent = question.getQuestionContent();
+        if (questionContent != null) {
+            questionVO.setQuestionContent(JSONUtil.toList(question.getQuestionContent(), QuestionContentDTO.class));
+        }
         return questionVO;
     }
 }
